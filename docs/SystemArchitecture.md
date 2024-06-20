@@ -39,12 +39,16 @@ diff复制代码+--------------------+
 4. **以太坊区块链节点**：承载智能合约的执行环境和数据存储。
 
 ## 数据库设计
+* 业务表： t_assets_config、t_bet_order、t_chain_network_config、t_user
+* 系统表: tb_auth_casbin_rule tb_oauth_access_tokens tb_users
+> 业务表均以 `t_` 开头，系统表均以 `tb_` 开头， 以下数据库设计只包含业务表的内容。
 
 ### 模型设计
 
 ![img.png](images/database.png)
 
 ### 数据库表结构
+
 
 ### Database Design
 
