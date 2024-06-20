@@ -40,38 +40,79 @@ diff复制代码+--------------------+
 
 ## 数据库设计
 
+### 模型设计
+
+![img.png](images/database.png)
+
 ### 数据库表结构
 
-#### 用户表（users）
+### Database Design
 
-| 字段名         | 类型         | 描述           |
-| -------------- | ------------ | -------------- |
-| id             | INT          | 用户ID (主键)  |
-| username       | VARCHAR(255) | 用户名         |
-| wallet_address | VARCHAR(255) | 以太坊钱包地址 |
-| created_at     | TIMESTAMP    | 创建时间       |
+#### Table: t_user
 
-#### 打赌表（bets）
+| Column Name        | Data Type      | Nullable | Comments                           |
+|--------------------|----------------|----------|------------------------------------|
+| id                 | bigint(40)     | No       | Primary key                        |
+| openId             | varchar(40)    | Yes      | WeChat mini-program user unique identifier |
+| wallet_address     | varchar(64)    | Yes      | User's web3 wallet address         |
+| wallet_private_key | varchar(128)   | Yes      | User's web3 wallet private key     |
+| deleted            | tinyint(1)     | Yes      | Logical delete flag                |
+| create_time        | timestamp      | Yes      | Creation timestamp                 |
+| update_time        | timestamp      | Yes      | Last update timestamp              |
 
-| 字段名      | 类型         | 描述          |
-| ----------- | ------------ | ------------- |
-| id          | INT          | 打赌ID (主键) |
-| title       | VARCHAR(255) | 打赌主题      |
-| description | TEXT         | 打赌描述      |
-| creator_id  | INT          | 创建者ID      |
-| created_at  | TIMESTAMP    | 创建时间      |
-| result      | VARCHAR(255) | 打赌结果      |
-| result_time | TIMESTAMP    | 结果发布时间  |
+#### Table: t_bet_order
 
-#### 参与表（participants）
+| Column Name        | Data Type      | Nullable | Comments                           |
+|--------------------|----------------|----------|------------------------------------|
+| id                 | bigint(40)     | No       | Primary key                        |
+| order_no           | varchar(40)    | Yes      | Bet order number                   |
+| participants       | varchar(200)   | Yes      | Participants' openIds, separated by commas |
+| created_tx_hash    | varchar(128)   | Yes      | Transaction hash for order creation |
+| settle_tx_hash     | varchar(128)   | Yes      | Transaction hash for order settlement |
+| creator            | varchar(40)    | Yes      | Creator's openId                   |
+| winners            | varchar(200)   | Yes      | Winners' openIds                   |
+| losers             | varchar(200)   | Yes      | Losers' openIds                    |
+| order_time         | timestamp      | Yes      | Order timestamp                    |
+| settle_time        | timestamp      | Yes      | Settlement timestamp               |
+| status             | tinyint(2)     | Yes      | Order status (0: created, 1: on-chain, 2: on-chain success, 3: on-chain failure, 4: settled) |
+| deleted            | tinyint(1)     | Yes      | Logical delete flag                |
+| create_time        | timestamp      | Yes      | Creation timestamp                 |
+| update_time        | timestamp      | Yes      | Last update timestamp              |
 
-| 字段名     | 类型      | 描述              |
-| ---------- | --------- | ----------------- |
-| id         | INT       | 参与记录ID (主键) |
-| bet_id     | INT       | 打赌ID            |
-| user_id    | INT       | 用户ID            |
-| amount     | DECIMAL   | 赌资金额          |
-| created_at | TIMESTAMP | 参与时间          |
+#### Table: t_chain_network_config
+
+| Column Name        | Data Type      | Nullable | Comments                           |
+|--------------------|----------------|----------|------------------------------------|
+| id                 | bigint(20)     | No       | Primary key                        |
+| chain_id           | varchar(16)    | Yes      | Chain ID                           |
+| chain_name         | varchar(32)    | Yes      | Chain name                         |
+| symbol             | varchar(16)    | Yes      | Native coin symbol                 |
+| decimals           | int(10)        | Yes      | Native coin decimals               |
+| avatar             | text           | Yes      | Logo image                         |
+| rpc_url            | varchar(256)   | Yes      | RPC URL                            |
+| web_rpc_url        | varchar(256)   | Yes      | WebSocket URL                      |
+| browser_url        | varchar(256)   | Yes      | Blockchain explorer URL            |
+| status             | tinyint(4)     | Yes      | Network status (0: disabled, 1: enabled) |
+| create_time        | timestamp      | Yes      | Creation timestamp                 |
+| update_time        | timestamp      | Yes      | Last update timestamp              |
+
+#### Table: t_assets_config
+
+| Column Name        | Data Type      | Nullable | Comments                           |
+|--------------------|----------------|----------|------------------------------------|
+| id                 | bigint(20)     | No       | Primary key                        |
+| chain_id           | varchar(16)    | Yes      | Chain ID                           |
+| chain_name         | varchar(32)    | Yes      | Chain name                         |
+| address            | varchar(64)    | Yes      | Contract address (empty for native coin) |
+| type               | tinyint(4)     | Yes      | Asset type (0: token, 1: native coin) |
+| symbol             | varchar(16)    | No       | Token symbol                       |
+| name               | varchar(32)    | Yes      | Token name                         |
+| decimals           | int(11)        | Yes      | Token decimals                     |
+| avatar             | text           | Yes      | Token avatar                       |
+| status             | tinyint(4)     | Yes      | Token status (0: disabled, 1: enabled) |
+| create_time        | timestamp      | Yes      | Creation timestamp                 |
+| update_time        | timestamp      | Yes      | Last update timestamp              |
+
 
 ## API接口设计
 
