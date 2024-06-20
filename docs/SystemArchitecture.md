@@ -26,7 +26,10 @@ diff复制代码+--------------------+
 +--------------------+
 ```
 ### 系统架构图
-![img.png](images/img.png)
+![img.png](images/architecture.png)
+
+### 功能点
+![img.png](images/features.png)
 
 ### 组件说明
 
