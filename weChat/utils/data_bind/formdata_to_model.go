@@ -1,9 +1,9 @@
 package data_bind
 
 import (
+	"bet365/weChat/global/consts"
 	"errors"
 	"github.com/gin-gonic/gin"
-	"goskeleton/app/global/consts"
 	"reflect"
 )
 

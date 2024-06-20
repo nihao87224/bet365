@@ -1,6 +1,6 @@
 package error_record
 
-import "goskeleton/app/global/variable"
+import "bet365/weChat/global/variable"
 
 // ErrorDeal 记录错误
 func ErrorDeal(err error) error {

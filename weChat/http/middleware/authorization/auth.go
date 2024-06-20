@@ -1,12 +1,12 @@
 package authorization
 
 import (
+	"bet365/weChat/global/consts"
+	"bet365/weChat/global/variable"
+	userstoken "bet365/weChat/service/users/token"
+	"bet365/weChat/utils/response"
 	"github.com/dchest/captcha"
 	"github.com/gin-gonic/gin"
-	"goskeleton/app/global/consts"
-	"goskeleton/app/global/variable"
-	userstoken "goskeleton/app/service/users/token"
-	"goskeleton/app/utils/response"
 	"strings"
 )
 
